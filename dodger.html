@@ -13,9 +13,11 @@
 <script>
 	var dabba;
 	var obstacle = [];
+	var score;
 	function startgame(){
 		
-		dabba = new component(30,30,"red",10,120);
+		dabba = new component(40,40,"red",10,120);
+		score = new component("30px","Consolas","black",280,40,"text");
 		gamearea.start();
 	}
 	var gamearea = {
@@ -36,9 +38,10 @@
 		}
 	}
 	
-	function component (width , height,color, x, y){
-		this.width=width;
-		this.height=height;
+	function component (width , height,color, x, y,type){
+		this.type = type;
+		this.width = width;
+		this.height = height;
 		this.speedx = 0;
 		this.speedy = 0;
 		this.x=x;
@@ -46,8 +49,16 @@
 		
 		this.update = function(){
 		ctx = gamearea.context;
+		if (this.type == "text") {
+    	ctx.font = this.width + " " + this.height;
+      	ctx.fillStyle = color;
+     	ctx.fillText(this.text, this.x, this.y);
+  		} 
+  		
+  		else{
 		ctx.fillStyle = color;
-		ctx.fillRect(this.x,this.y, this.width,this.height);
+		ctx.fillRect(this.x,this.y, this.width,this.height);}
+
 		}
 		this.newpos = function(){
 			this.x += this.speedx;
@@ -82,12 +93,16 @@
 		if(gamearea.frameNo == 1 || everyinterval(150)){
 			x = gamearea.canvas.width;
 			y = Math.floor((Math.random() * 300) + 1);
-			obstacle.push(new component(30 ,40, "#61e00d",x,y));
+			a = Math.floor((Math.random() * 70) + 1);
+			b = Math.floor((Math.random() * 70) + 1);
+			obstacle.push(new component(a ,b, "#61e00d",x,y));
 		}
 		for (i=0;i<obstacle.length; i += 1){
 			obstacle[i].x += -1;
 			obstacle[i].update();
 		}
+		score.text="SCORE: " + gamearea.frameNo;
+		score.update();
 		dabba.newpos(); 
 		dabba.update();
 		
