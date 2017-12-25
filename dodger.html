@@ -93,9 +93,7 @@
 		if(gamearea.frameNo == 1 || everyinterval(150)){
 			x = gamearea.canvas.width;
 			y = Math.floor((Math.random() * 300) + 1);
-			a = Math.floor((Math.random() * 70) + 1);
-			b = Math.floor((Math.random() * 70) + 1);
-			obstacle.push(new component(a ,b, "#61e00d",x,y));
+			obstacle.push(new component(50 ,30, "#61e00d",x,y));
 		}
 		for (i=0;i<obstacle.length; i += 1){
 			obstacle[i].x += -1;
